@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Vercel App</title>
+</head>
+<body>
+    <h1>Welcome to the Simple Vercel App!</h1>
+    <p id="status">Waiting for others to join...</p>
+
+    <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+    <script>
+        const socket = io('https://simple-vercel-app.vercel.app', { transports: ['websocket'] });
+
+        socket.on('connect', () => {
+            document.getElementById('status').textContent = 'You are connected!';
+            socket.emit('newUser');
+        });
+
+        socket.on('userJoined', () => {
+            document.getElementById('status').textContent = 'Someone else joined!';
+        });
+    </script>
+</body>
+</html>
